@@ -27,20 +27,20 @@ void main() async {
 
   runApp(
     const ProviderScope(
-      child: AstrologyApp(),
+      child: AstroNexApp(),
     ),
   );
 }
 
-class AstrologyApp extends ConsumerWidget {
-  const AstrologyApp({super.key});
+class AstroNexApp extends ConsumerWidget {
+  const AstroNexApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeModeProvider);
 
     return MaterialApp.router(
-      title: 'Astrology',
+      title: 'AstroNex',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,

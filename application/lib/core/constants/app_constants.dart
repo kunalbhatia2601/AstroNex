@@ -3,8 +3,13 @@ class AppConstants {
   AppConstants._();
 
   // App Info
-  static const String appName = 'Astrology';
+  static const String appName = 'AstroNex';
   static const String appVersion = '1.0.0';
+
+  // Assets
+  static const String logo = 'assets/images/logo.png';
+  static const String background = 'assets/images/background.png';
+  static const String zodiacVector = 'assets/images/ZodiacVector.png';
 
   // API
   static const String baseUrl = 'https://api.astrology.example.com';

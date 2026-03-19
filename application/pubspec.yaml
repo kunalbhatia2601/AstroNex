@@ -1,5 +1,5 @@
-name: astrology_app
-description: "A fully modular astrology application built with Clean Architecture"
+name: astronex
+description: "AstroNex — A fully modular astrology application built with Clean Architecture"
 publish_to: 'none'
 version: 1.0.0+1
 
