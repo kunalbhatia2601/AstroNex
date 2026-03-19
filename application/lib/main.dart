@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'core/config/app_config.dart';
 import 'core/di/injection_container.dart';
 import 'core/routes/app_router.dart';
 import 'core/theme/app_theme.dart';
@@ -18,7 +19,10 @@ void main() async {
     ),
   );
 
-  // Initialize dependencies
+  // Initialise the centralised config (SharedPreferences under the hood)
+  await AppConfig.init();
+
+  // Initialize other dependencies (network, DI, etc.)
   await initDependencies();
 
   runApp(

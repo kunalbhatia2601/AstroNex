@@ -1,17 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../config/app_config.dart';
+import '../../features/auth/presentation/screens/login_screen.dart';
+import '../../features/auth/presentation/screens/details_screen.dart';
+import '../../features/auth/presentation/screens/otp_screen.dart';
+import '../../features/auth/presentation/screens/language_screen.dart';
+import '../../features/auth/presentation/screens/dob_screen.dart';
+import '../../features/auth/presentation/screens/place_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/horoscope/presentation/screens/horoscope_screen.dart';
+import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
 import '../../features/zodiac/presentation/screens/zodiac_list_screen.dart';
 import '../../features/zodiac/presentation/screens/zodiac_detail_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
 import '../widgets/main_scaffold.dart';
 
-/// Route paths
+/// ─── Route paths ──────────────────────────────────────────────
 class AppRoutes {
   AppRoutes._();
 
+  // Onboarding
+  static const String onboarding = '/onboarding';
+
+  // Auth flow
+  static const String authLogin = '/auth/login';
+  static const String authDetails = '/auth/details';
+  static const String authOtp = '/auth/otp';
+  static const String authLanguage = '/auth/language';
+  static const String authDob = '/auth/dob';
+  static const String authPlace = '/auth/place';
+
+  // Main app
   static const String home = '/';
   static const String horoscope = '/horoscope';
   static const String zodiac = '/zodiac';
@@ -20,18 +40,64 @@ class AppRoutes {
   static const String settings = '/settings';
 }
 
-/// Router configuration
+/// ─── Initial route logic ──────────────────────────────────────
+String _resolveInitialRoute() {
+  if (AppConfig.shouldShowOnboarding) return AppRoutes.onboarding;
+  // TODO: check if user is logged in → AppRoutes.home
+  // For now, after onboarding always land on login
+  return AppRoutes.authLogin;
+}
+
+/// ─── Router ───────────────────────────────────────────────────
 final GoRouter appRouter = GoRouter(
-  initialLocation: AppRoutes.home,
+  initialLocation: _resolveInitialRoute(),
   debugLogDiagnostics: true,
   routes: [
-    // Shell route for bottom navigation
+    // ── Onboarding ──────────────────────────────────────────
+    GoRoute(
+      path: AppRoutes.onboarding,
+      name: 'onboarding',
+      builder: (context, state) => const OnboardingScreen(),
+    ),
+
+    // ── Auth flow ───────────────────────────────────────────
+    GoRoute(
+      path: AppRoutes.authLogin,
+      name: 'authLogin',
+      builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.authDetails,
+      name: 'authDetails',
+      builder: (context, state) => const DetailsScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.authOtp,
+      name: 'authOtp',
+      builder: (context, state) => const OtpScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.authLanguage,
+      name: 'authLanguage',
+      builder: (context, state) => const LanguageScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.authDob,
+      name: 'authDob',
+      builder: (context, state) => const DobScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.authPlace,
+      name: 'authPlace',
+      builder: (context, state) => const PlaceScreen(),
+    ),
+
+    // ── Main app (bottom navigation shell) ──────────────────
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return MainScaffold(navigationShell: navigationShell);
       },
       branches: [
-        // Home branch
         StatefulShellBranch(
           routes: [
             GoRoute(
@@ -41,7 +107,6 @@ final GoRouter appRouter = GoRouter(
             ),
           ],
         ),
-        // Horoscope branch
         StatefulShellBranch(
           routes: [
             GoRoute(
@@ -51,7 +116,6 @@ final GoRouter appRouter = GoRouter(
             ),
           ],
         ),
-        // Zodiac branch
         StatefulShellBranch(
           routes: [
             GoRoute(
@@ -71,7 +135,6 @@ final GoRouter appRouter = GoRouter(
             ),
           ],
         ),
-        // Settings branch
         StatefulShellBranch(
           routes: [
             GoRoute(
@@ -83,7 +146,8 @@ final GoRouter appRouter = GoRouter(
         ),
       ],
     ),
-    // Birth Chart route (full screen)
+
+    // ── Birth Chart (full screen) ───────────────────────────
     GoRoute(
       path: AppRoutes.birthChart,
       name: 'birthChart',
