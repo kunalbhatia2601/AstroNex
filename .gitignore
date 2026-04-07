@@ -13,3 +13,5 @@ build/
 *.sw?
 coverage/
 *.tsbuildinfo
+
+APPLICATION_ANALYSIS.md

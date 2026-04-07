@@ -63,5 +63,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/home/
+    - assets/images/home/hero/
     - assets/images/onboarding/
     - assets/icons/
